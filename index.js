@@ -398,9 +398,14 @@
         return r.width >= 120 && r.height >= 40;
     }
 
-    /** Dialogs are modal, so the button has to live inside the open one to be tappable. */
+    /**
+     * Where the floating button lives.
+     * - Inside an open dialog, because dialogs are modal and nothing outside them can be tapped.
+     * - Inside the open side panel (like the character editor), because SillyTavern closes any
+     *   open panel when a tap lands outside it, and a button on <body> would count as outside.
+     */
     function hostFor(el) {
-        return el.closest('dialog[open]') || document.body;
+        return el.closest('dialog[open]') || el.closest('.drawer-content') || document.body;
     }
 
     function buildFloat() {

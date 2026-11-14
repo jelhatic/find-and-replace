@@ -4,6 +4,6 @@
     "js": "index.js",
     "css": "style.css",
     "author": "you",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description": "Adds a find and replace bar to any text box: tap into a box and tap the magnifier that appears."
 }
