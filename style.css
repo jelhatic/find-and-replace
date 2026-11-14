@@ -1,0 +1,81 @@
+/* Find & Replace bar. Uses SillyTavern's own classes and theme variables. */
+
+.fr-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    margin: 2px 0 5px;
+    border: 1px solid var(--SmartThemeBorderColor);
+    border-radius: 10px;
+    background-color: var(--black30a);
+}
+
+.fr-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+}
+
+.fr-bar .text_pole {
+    flex: 1 1 8em;
+    min-width: 0;
+    margin: 0;
+    /* 16px or larger stops iOS from zooming the page when the field is focused */
+    font-size: max(16px, var(--mainFontSize));
+}
+
+.fr-bar .menu_button {
+    flex: 0 0 auto;
+    margin: 0;
+    min-width: 2.2em;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.fr-count {
+    flex: 0 0 auto;
+    min-width: 3.6em;
+    text-align: center;
+    font-size: calc(var(--mainFontSize) * 0.85);
+    font-variant-numeric: tabular-nums;
+    opacity: 0.8;
+}
+
+.fr-bar .fr-case {
+    opacity: 0.5;
+}
+
+.fr-bar .fr-case.fr-on {
+    opacity: 1;
+    border-color: var(--SmartThemeBodyColor);
+}
+
+
+/* Floating magnifier that follows the focused text box. */
+.fr-float {
+    position: fixed;
+    box-sizing: border-box;
+    z-index: 10000;
+    width: 34px;
+    height: 34px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    opacity: 0.8;
+    box-shadow: 0 1px 4px var(--black50a, rgba(0, 0, 0, 0.5));
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.fr-float:hover {
+    opacity: 1;
+}

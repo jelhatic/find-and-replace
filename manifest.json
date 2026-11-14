@@ -1,0 +1,9 @@
+{
+    "display_name": "Find & Replace",
+    "loading_order": 100,
+    "js": "index.js",
+    "css": "style.css",
+    "author": "you",
+    "version": "0.2.1",
+    "description": "Adds a find and replace bar to any text box: tap into a box and tap the magnifier that appears."
+}
