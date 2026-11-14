@@ -24,6 +24,7 @@
         busy: false,      // true while we edit the textarea ourselves
         floatEl: null,    // the floating magnifier button
         floatTa: null,    // textarea the floating button currently belongs to
+        pressTa: null,    // textarea remembered while the floating button is pressed
         raf: 0,
     };
 
@@ -410,14 +411,21 @@
         btn.style.display = 'none';
 
         // Never steal focus from the textarea: the keyboard stays up and nothing else reacts.
-        const keepFocus = (e) => { e.preventDefault(); e.stopPropagation(); };
+        // (Don't cancel touchstart: on a phone that also cancels the click that follows.)
+        const keepFocus = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            state.pressTa = state.floatTa;   // remembered in case the box loses focus before the click lands
+            setTimeout(() => { state.pressTa = null; }, 800);
+        };
         btn.addEventListener('pointerdown', keepFocus);
         btn.addEventListener('mousedown', keepFocus);
-        btn.addEventListener('touchstart', keepFocus, { passive: false });
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            if (state.floatTa?.isConnected) openBar(state.floatTa);
+            const ta = state.floatTa || state.pressTa;
+            state.pressTa = null;
+            if (ta?.isConnected) openBar(ta);
         });
         return btn;
     }
@@ -512,6 +520,7 @@
         document.addEventListener('focusout', () => {
             // Wait to see where focus went before hiding.
             setTimeout(() => {
+                if (state.pressTa) return;   // the floating button is being tapped
                 const a = document.activeElement;
                 if (isEligible(a) || state.bar?.contains(a)) return;
                 hideFloat();
