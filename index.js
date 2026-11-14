@@ -104,7 +104,17 @@
             ta.removeEventListener('input', swallow, true);
             state.busy = false;
         }
-        ta.dispatchEvent(new Event('input', { bubbles: true }));
+        // Tell the rest of the page the box changed, the way a real edit would:
+        // an input event for live listeners (autosave, token counter) and a change
+        // event for anything that waits for the edit to be committed.
+        let inputEvent;
+        try {
+            inputEvent = new InputEvent('input', { bubbles: true, inputType: 'insertReplacementText', data: text });
+        } catch {
+            inputEvent = new Event('input', { bubbles: true });
+        }
+        ta.dispatchEvent(inputEvent);
+        ta.dispatchEvent(new Event('change', { bubbles: true }));
     }
 
     // ------------------------------------------------------------------
